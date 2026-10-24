@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhyFirst — From Purpose to Product-Market Fit</title>
+  <meta name="description" content="An interactive journey that starts with Why and guides you to Product-Market Fit." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar-container" id="progressContainer" style="display:none;">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-steps" id="progressSteps"></div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="nav" id="mainNav" style="display:none;">
+    <div class="nav-logo" data-i18n="navLogo">WhyFirst</div>
+    <div class="nav-right">
+      <div class="lang-switcher" id="navLangSwitcher">
+        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" data-lang="hi" onclick="setLanguage('hi')">हि</button>
+      </div>
+      <button class="nav-restart" id="restartBtn" data-i18n="navRestart">↺ Start Over</button>
+    </div>
+  </nav>
+
+  <!-- Voice Indicator (floating) -->
+  <div class="voice-indicator" id="voiceIndicator">
+    <div class="voice-waves">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="voice-info">
+      <span class="voice-status-text" id="voiceStatusText" data-i18n="voiceListening">Listening…</span>
+      <span class="voice-interim" id="voiceInterim"></span>
+    </div>
+    <button class="voice-stop-btn" id="voiceStopBtn" onclick="stopVoice()" data-i18n="voiceStop">■ Stop</button>
+  </div>
+
+  <div class="app" id="app">
+
+    <!-- SCREEN 0: Hero -->
+    <section class="screen active" id="screen-0">
+      <div class="screen-inner hero-screen">
+        <div class="hero-lang" id="heroLangSwitcher">
+          <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+          <button class="lang-btn" data-lang="hi" onclick="setLanguage('hi')">हि</button>
+        </div>
+        <div class="hero-badge" data-i18n="heroBadge">A Framework for Founders</div>
+        <h1 class="hero-title">
+          <span data-i18n="heroTitle1">Start with</span><br/>
+          <span class="gradient-text" data-i18n="heroTitle2">Why.</span>
+        </h1>
+        <p class="hero-sub" data-i18n-html="heroSubHTML">
+          Every great company begins with a belief — not a product.<br/>
+          This guided journey helps you uncover your <em>Why</em>,<br/>
+          align it with a real market need, and reach <strong>Product-Market Fit</strong>.
+        </p>
+        <div class="hero-circles">
+          <div class="golden-ring ring-outer"><span data-i18n="ringWhat">WHAT</span></div>
+          <div class="golden-ring ring-mid"><span data-i18n="ringHow">HOW</span></div>
+          <div class="golden-ring ring-inner"><span data-i18n="ringWhy">WHY</span></div>
+        </div>
+        <button class="btn-primary" id="startBtn" data-i18n="beginJourney">Begin Your Journey →</button>
+        <p class="hero-hint" data-i18n="heroHint">5 stages · ~10 minutes · No login required</p>
+      </div>
+    </section>
+
+    <!-- SCREEN 1: WHY -->
+    <section class="screen" id="screen-1">
+      <div class="screen-inner">
+        <div class="stage-badge stage-why" data-i18n="stage1Badge">Stage 1 of 5 · WHY</div>
+        <h2 class="stage-title" data-i18n-html="stage1Title">What do you <em>believe</em>?</h2>
+        <p class="stage-desc" data-i18n-html="stage1Desc"></p>
+        <div class="insight-card">
+          <div class="insight-icon">💡</div>
+          <p data-i18n-html="stage1Insight"></p>
+        </div>
+        <div class="question-block">
+          <label class="q-label" for="q-belief" data-i18n="stage1Q1Label">Finish this sentence:</label>
+          <div class="prompt-prefix" data-i18n="stage1Prefix">"I believe the world would be better if…"</div>
+          <div class="voice-wrapper">
+            <textarea id="q-belief" class="text-input" data-i18n-placeholder="stage1Q1Placeholder" rows="3"></textarea>
+            <button class="mic-btn" data-target="q-belief" onclick="toggleVoice('q-belief', this)" title="Speak your answer">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="question-block">
+          <label class="q-label" for="q-change" data-i18n="stage1Q2Label">What change do you want to create in the world?</label>
+          <div class="voice-wrapper">
+            <textarea id="q-change" class="text-input" data-i18n-placeholder="stage1Q2Placeholder" rows="3"></textarea>
+            <button class="mic-btn" data-target="q-change" onclick="toggleVoice('q-change', this)" title="Speak your answer">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="question-block">
+          <label class="q-label" data-i18n="stage1Q3Label">How passionate are you about this?</label>
+          <div class="slider-row">
+            <span class="slider-label" data-i18n="sliderMeh">Meh</span>
+            <input type="range" id="q-passion" class="slider" min="1" max="10" value="7" />
+            <span class="slider-label" data-i18n="sliderObsessed">Obsessed</span>
+          </div>
+          <div class="slider-value" id="passionValue">7 / 10</div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goTo(0)" data-i18n="btnBack">← Back</button>
+          <button class="btn-primary" onclick="validateAndNext(1)" data-i18n="btnNextHow">Next: How →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: HOW -->
+    <section class="screen" id="screen-2">
+      <div class="screen-inner">
+        <div class="stage-badge stage-how" data-i18n="stage2Badge">Stage 2 of 5 · HOW</div>
+        <h2 class="stage-title" data-i18n-html="stage2Title">How do you deliver<br/>on your belief?</h2>
+        <p class="stage-desc" data-i18n-html="stage2Desc"></p>
+        <div class="insight-card">
+          <div class="insight-icon">🔑</div>
+          <p data-i18n-html="stage2Insight"></p>
+        </div>
+        <div class="question-block">
+          <label class="q-label" for="q-approach" data-i18n="stage2Q1Label">What is your unique approach or method?</label>
+          <div class="voice-wrapper">
+            <textarea id="q-approach" class="text-input" data-i18n-placeholder="stage2Q1Placeholder" rows="3"></textarea>
+            <button class="mic-btn" data-target="q-approach" onclick="toggleVoice('q-approach', this)" title="Speak your answer">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="question-block">
+          <label class="q-label" for="q-unfair" data-i18n="stage2Q2Label">What is your unfair advantage?</label>
+          <div class="voice-wrapper">
+            <textarea id="q-unfair" class="text-input" data-i18n-placeholder="stage2Q2Placeholder" rows="3"></textarea>
+            <button class="mic-btn" data-target="q-unfair" onclick="toggleVoice('q-unfair', this)" title="Speak your answer">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="question-block">
+          <label class="q-label" data-i18n="stage2Q3Label">Pick the principles that define your How:</label>
+          <div class="tag-grid" id="how-tags"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goTo(1)" data-i18n="btnBack">← Back</button>
+          <button class="btn-primary" onclick="validateAndNext(2)" data-i18n="btnNextWho">Next: Who →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: WHO -->
+    <section class="screen" id="screen-3">
+      <div class="screen-inner">
+        <div class="stage-badge stage-who" data-i18n="stage3Badge">Stage 3 of 5 · WHO</div>
+        <h2 class="stage-title" data-i18n-html="stage3Title">Who feels this<br/><em>pain the most</em>?</h2>
+        <p class="stage-desc" data-i18n-html="stage3Desc"></p>
+        <div class="insight-card">
+          <div class="insight-icon">🎯</div>
+          <p data-i18n-html="stage3Insight"></p>
+        </div>
+        <div class="question-block">
+          <label class="q-label" for="q-customer" data-i18n="stage3Q1Label">Describe your ideal early customer in one sentence:</label>
+          <div class="voice-wrapper">
+            <textarea id="q-customer" class="text-input" data-i18n-placeholder="stage3Q1Placeholder" rows="3"></textarea>
+            <button class="mic-btn" data-target="q-customer" onclick="toggleVoice('q-customer', this)" title="Speak your answer">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="question-block">
+          <label class="q-label" for="q-pain" data-i18n="stage3Q2Label">What is the #1 pain they experience today?</label>
+          <div class="voice-wrapper">
+            <textarea id="q-pain" class="text-input" data-i18n-placeholder="stage3Q2Placeholder" rows="3"></textarea>
+            <button class="mic-btn" data-target="q-pain" onclick="toggleVoice('q-pain', this)" title="Speak your answer">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="question-block">
+          <label class="q-label" for="q-current" data-i18n="stage3Q3Label">How do they solve this problem today?</label>
+          <div class="voice-wrapper">
+            <textarea id="q-current" class="text-input" data-i18n-placeholder="stage3Q3Placeholder" rows="3"></textarea>
+            <button class="mic-btn" data-target="q-current" onclick="toggleVoice('q-current', this)" title="Speak your answer">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="question-block">
+          <label class="q-label" data-i18n="stage3Q4Label">How severe is their pain?</label>
+          <div class="pain-scale">
+            <button class="pain-btn" data-level="1" onclick="setPain(1)"><span class="pain-emoji">😑</span><span data-i18n="pain1">Minor</span></button>
+            <button class="pain-btn" data-level="2" onclick="setPain(2)"><span class="pain-emoji">😟</span><span data-i18n="pain2">Annoying</span></button>
+            <button class="pain-btn active" data-level="3" onclick="setPain(3)"><span class="pain-emoji">😣</span><span data-i18n="pain3">Serious</span></button>
+            <button class="pain-btn" data-level="4" onclick="setPain(4)"><span class="pain-emoji">😤</span><span data-i18n="pain4">Urgent</span></button>
+            <button class="pain-btn" data-level="5" onclick="setPain(5)"><span class="pain-emoji">🔥</span><span data-i18n="pain5">Critical</span></button>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goTo(2)" data-i18n="btnBack">← Back</button>
+          <button class="btn-primary" onclick="validateAndNext(3)" data-i18n="btnNextWhat">Next: What →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: WHAT -->
+    <section class="screen" id="screen-4">
+      <div class="screen-inner">
+        <div class="stage-badge stage-what" data-i18n="stage4Badge">Stage 4 of 5 · WHAT</div>
+        <h2 class="stage-title" data-i18n-html="stage4Title">What are you<br/><em>actually building</em>?</h2>
+        <p class="stage-desc" data-i18n-html="stage4Desc"></p>
+        <div class="insight-card">
+          <div class="insight-icon">🛠️</div>
+          <p data-i18n-html="stage4Insight"></p>
+        </div>
+        <div class="question-block">
+          <label class="q-label" for="q-product" data-i18n="stage4Q1Label">Describe your product in one clear sentence:</label>
+          <div class="voice-wrapper">
+            <textarea id="q-product" class="text-input" data-i18n-placeholder="stage4Q1Placeholder" rows="3"></textarea>
+            <button class="mic-btn" data-target="q-product" onclick="toggleVoice('q-product', this)" title="Speak your answer">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="question-block">
+          <label class="q-label" data-i18n="stage4Q2Label">What is the single most important value your product delivers?</label>
+          <div class="value-options" id="value-options"></div>
+        </div>
+        <div class="question-block">
+          <label class="q-label" for="q-evidence" data-i18n="stage4Q3Label">Do you have any evidence of demand?</label>
+          <div class="voice-wrapper">
+            <textarea id="q-evidence" class="text-input" data-i18n-placeholder="stage4Q3Placeholder" rows="3"></textarea>
+            <button class="mic-btn" data-target="q-evidence" onclick="toggleVoice('q-evidence', this)" title="Speak your answer">
+              <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goTo(3)" data-i18n="btnBack">← Back</button>
+          <button class="btn-primary" onclick="validateAndNext(4)" data-i18n="btnScorePMF">Score My PMF →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 5: PMF -->
+    <section class="screen" id="screen-5">
+      <div class="screen-inner">
+        <div class="stage-badge stage-pmf" data-i18n="stage5Badge">Stage 5 of 5 · PMF</div>
+        <h2 class="stage-title" data-i18n-html="stage5Title">Your PMF<br/><em>Signal Report</em></h2>
+        <p class="stage-desc" data-i18n="stage5Desc">Based on your answers, here's where you stand on the path to Product-Market Fit.</p>
+        <div class="pmf-meter-container">
+          <div class="pmf-meter"><div class="pmf-fill" id="pmfFill"></div></div>
+          <div class="pmf-labels">
+            <span data-i18n="pmfLabel1">Pre-idea</span>
+            <span data-i18n="pmfLabel2">Exploring</span>
+            <span data-i18n="pmfLabel3">Validating</span>
+            <span data-i18n="pmfLabel4">PMF Signal</span>
+            <span data-i18n="pmfLabel5">Scaling 🚀</span>
+          </div>
+          <div class="pmf-score-display">
+            <span class="pmf-number" id="pmfNumber">0</span>
+            <span class="pmf-label-text">/ 100</span>
+          </div>
+        </div>
+        <div class="pmf-summary" id="pmfSummary"></div>
+        <div class="pmf-breakdown" id="pmfBreakdown">
+          <h3 class="breakdown-title" data-i18n="breakdownTitle">Dimension Breakdown</h3>
+          <div id="breakdownItems"></div>
+        </div>
+        <div class="next-steps" id="nextSteps">
+          <h3 class="breakdown-title" data-i18n="nextStepsTitle">🗺️ Your Immediate Next Steps</h3>
+          <div id="nextStepsItems"></div>
+        </div>
+        <div class="golden-summary" id="goldenSummary">
+          <h3 class="breakdown-title" data-i18n="goldenTitle">✨ Your Golden Circle</h3>
+          <div id="goldenItems"></div>
+        </div>
+        <div class="btn-row centered">
+          <button class="btn-secondary" onclick="goTo(4)" data-i18n="btnRefine">← Refine Answers</button>
+          <button class="btn-share" onclick="shareGoldenCircle()" data-i18n="btnShare">🌐 Share Card</button>
+          <button class="btn-primary" onclick="downloadSummary()" data-i18n="btnDownload">⬇ Download Summary</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
